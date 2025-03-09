@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #5d5d8f;
+  }
+  
+  .container {
+    text-align: center;
+    background: #f38181;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(77, 13, 13, 0.1);
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+  }
+  
+  .upload-area {
+    margin-bottom: 20px;
+  }
+  
+  #imageInput {
+    display: none;
+  }
+  
+  #uploadBtn {
+    background-color: #153354;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  #uploadBtn:hover {
+    background-color: #274a6f;
+  }
+  
+  .preview-area {
+    margin-bottom: 20px;
+  }
+  
+  #previewImage {
+    max-width: 100%;
+    max-height: 200px;
+    border: 2px dashed #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    object-fit: contain;
+  }
+  
+  .result-area {
+    font-size: 18px;
+    color: #333;
+  }

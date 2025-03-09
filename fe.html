@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Recognition</title>
+  <link rel="stylesheet" href="frontend.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Image Recognition App</h1>
+    <div class="upload-area">
+      <button id="uploadBtn">Upload Image</button>
+      <input type="file" id="imageInput" accept="image/*" style="display: none;"/>
+    </div>
+    <div class="preview-area">
+      <img id="previewImage" alt="Select Image From this device" />
+    </div>
+    <div class="result-area">
+      <p id="resultText">here you goo!</p>
+      <img id="resultImage" style="max-width: 100%; height: auto; display: none;" alt="Processed Image"/>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("uploadBtn").addEventListener("click", () => {
+      document.getElementById("imageInput").click();
+    });
+
+    document.getElementById("imageInput").addEventListener("change", function () {
+      const file = this.files[0];
+
+      if (file) {
+        // Display the image preview
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const previewImage = document.getElementById("previewImage");
+          previewImage.src = e.target.result;
+        };
+        reader.readAsDataURL(file); // Read the file as a data URL
+
+        // Prepare the form data to send the image
+        const formData = new FormData();
+        formData.append("file", file);
+
+        // Send the image to the Python server
+        fetch('http://localhost:8000', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log("response from backend:",data);
+          const resultText = document.getElementById("resultText");
+          resultText.textContent = "Recognition result: Image processed with bounding boxes";
+
+          // Display the processed image returned from the server
+          const resultImage = document.getElementById("resultImage");
+          resultImage.src = "data:image/jpeg;base64," + data.image;  // Set the source to the base64-encoded image
+          resultImage.style.display = 'block';  // Show the processed image
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+      }
+    });
+  </script>
+
+</body>
+</html>
